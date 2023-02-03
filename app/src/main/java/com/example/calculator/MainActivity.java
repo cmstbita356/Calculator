@@ -270,14 +270,16 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Kiểm tra số âm
+        int countRemove = 0;
         for(int i = 0; i < indexOperands.size()-1; i++)
         {
             if(indexOperands.get(i+1) - indexOperands.get(i) == 1)
             {
-                Operands.remove(i+1);
-                double numRemove = Operators.get(i+1);
-                Operators.remove(i+1);
-                Operators.add(i+1, -numRemove);
+                Operands.remove(i+1 - countRemove);
+                double numRemove = Operators.get(i + 1 - countRemove);
+                Operators.remove(i+1 - countRemove);
+                Operators.add(i+1 - countRemove, -numRemove);
+                countRemove++;
 
             }
         }
