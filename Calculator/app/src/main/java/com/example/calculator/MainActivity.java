@@ -21,6 +21,9 @@ import java.util.Stack;
 import java.util.LinkedList;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String KEY_DISPLAY = "display";
+    private static final String KEY_HISTORY = "history";
+
     TextView result;
     TextView cal;
     Button bracket_left; Button bracket_right; Button percent; Button clear;
@@ -33,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     String stringCal= "";
     ArrayList<String> listHistory = new ArrayList<>();
+    String textHis = "";
     public static boolean isNumeric(String str) {
         try {
             Double.parseDouble(str);
@@ -41,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     }
-    private View.OnClickListener showText = new View.OnClickListener() {
+    private View.OnClickListener display = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Button b = (Button)view;
@@ -93,6 +97,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if(savedInstanceState != null)
+        {
+            stringCal = savedInstanceState.getString(KEY_DISPLAY);
+            textHis = savedInstanceState.getString(KEY_HISTORY);
+            history.setText(textHis);
+        }
+
         // Khai báo biến
         cal = findViewById(R.id.cal);
         result = findViewById(R.id.result);
@@ -120,24 +131,24 @@ public class MainActivity extends AppCompatActivity {
         clearHistory = findViewById(R.id.clearHistory);
 
         //EventHandler
-        num1.setOnClickListener(showText);
-        num2.setOnClickListener(showText);
-        num3.setOnClickListener(showText);
-        num4.setOnClickListener(showText);
-        num5.setOnClickListener(showText);
-        num6.setOnClickListener(showText);
-        num7.setOnClickListener(showText);
-        num8.setOnClickListener(showText);
-        num9.setOnClickListener(showText);
-        num0.setOnClickListener(showText);
-        comma.setOnClickListener(showText);
-        percent.setOnClickListener(showText);
-        plus.setOnClickListener(showText);
-        subtract.setOnClickListener(showText);
-        multiply.setOnClickListener(showText);
-        divide.setOnClickListener(showText);
-        bracket_left.setOnClickListener(showText);
-        bracket_right.setOnClickListener(showText);
+        num1.setOnClickListener(display);
+        num2.setOnClickListener(display);
+        num3.setOnClickListener(display);
+        num4.setOnClickListener(display);
+        num5.setOnClickListener(display);
+        num6.setOnClickListener(display);
+        num7.setOnClickListener(display);
+        num8.setOnClickListener(display);
+        num9.setOnClickListener(display);
+        num0.setOnClickListener(display);
+        comma.setOnClickListener(display);
+        percent.setOnClickListener(display);
+        plus.setOnClickListener(display);
+        subtract.setOnClickListener(display);
+        multiply.setOnClickListener(display);
+        divide.setOnClickListener(display);
+        bracket_left.setOnClickListener(display);
+        bracket_right.setOnClickListener(display);
 
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,12 +168,7 @@ public class MainActivity extends AppCompatActivity {
                 stringCal = "";
 
                 //Hiển thị History
-                listHistory.add(text);
-                String textHis = "";
-                for(String his : listHistory)
-                {
-                    textHis += his + "\n";
-                }
+                textHis += text + "\n";
                 history.setText(textHis);
             }
         });
@@ -170,8 +176,8 @@ public class MainActivity extends AppCompatActivity {
         clearHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listHistory.clear();
-                history.setText("");
+                textHis = "";
+                history.setText(textHis);
             }
         });
     }
